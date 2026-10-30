@@ -8,7 +8,7 @@ Linux and macOS support amd64 and arm64; Windows supports amd64 where the releas
 
 ```yaml
 - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-- uses: openvaultdb/setup-ovdb@5ea8b278876254978e634697118523c5a17c9356
+- uses: openvaultdb/setup-ovdb@040213997fe16b0d199bbe5a2f2b95bfb6abdce0
   with:
     version: v0.43.3
 - run: ovdb --version
