@@ -1,5 +1,9 @@
 # setup-ovdb
 
+[![Watch the OpenVaultDB product video](assets/product-video.webp)](https://youtu.be/LMTcLntUWJM)
+
+[Watch the OpenVaultDB product video](https://youtu.be/LMTcLntUWJM)
+
 Install an exact [OpenVaultDB CLI](https://github.com/openvaultdb/ovdb) release in GitHub Actions without Go. This action installs the CLI only; workflows choose which commands to run.
 
 `version` is required and must be an exact release tag. `expected-sha256` optionally supplies an independently obtained digest for the selected platform archive. The release checksum file detects corruption but cannot authenticate a release if both archive and checksum are replaced. The `version` output contains the installed release tag.
