@@ -1,0 +1,44 @@
+name: Self-test
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - id: setup
+        uses: ./
+        with:
+          version: v0.43.3
+      - name: Verify installed CLI
+        shell: pwsh
+        env:
+          RESULT_VERSION: ${{ steps.setup.outputs.version }}
+        run: |
+          if ($env:RESULT_VERSION -ne 'v0.43.3') { throw 'wrong output version' }
+          $path = (Get-Command ovdb).Source
+          if (-not $path.StartsWith($env:RUNNER_TEMP, [StringComparison]::OrdinalIgnoreCase)) { throw "unexpected binary: $path" }
+          $reported = & ovdb --version
+          if ($LASTEXITCODE -ne 0 -or $reported -notmatch '(^|[^0-9])0\.43\.3([^0-9]|$)') { throw "wrong binary version: $reported" }
+      - id: wrong_digest
+        continue-on-error: true
+        uses: ./
+        with:
+          version: v0.43.3
+          expected-sha256: '0000000000000000000000000000000000000000000000000000000000000000'
+      - name: Assert failure
+        shell: pwsh
+        env:
+          OUTCOME: ${{ steps.wrong_digest.outcome }}
+        run: if ($env:OUTCOME -ne 'failure') { throw 'incorrect digest was accepted' }
+      - name: Test checksum failure reasons
+        shell: pwsh
+        run: ./test-install.ps1

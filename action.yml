@@ -1,0 +1,23 @@
+name: Setup OpenVaultDB
+description: Install an exact released OpenVaultDB CLI binary
+inputs:
+  version:
+    description: Exact OpenVaultDB CLI release tag, such as v0.43.3
+    required: true
+  expected-sha256:
+    description: Optional independent SHA-256 for this platform's archive
+    required: false
+outputs:
+  version:
+    description: Installed release tag
+    value: ${{ steps.install.outputs.version }}
+runs:
+  using: composite
+  steps:
+    - id: install
+      shell: pwsh
+      env:
+        SETUP_ACTION_PATH: ${{ github.action_path }}
+        SETUP_VERSION: ${{ inputs.version }}
+        SETUP_EXPECTED_SHA256: ${{ inputs.expected-sha256 }}
+      run: '& "$env:SETUP_ACTION_PATH/install.ps1"'
