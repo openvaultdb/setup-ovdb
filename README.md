@@ -1,6 +1,6 @@
 # setup-ovdb
 
-[![Watch the OpenVaultDB product video](assets/product-video.webp)](https://youtu.be/LMTcLntUWJM)
+[![Watch the OpenVaultDB product video](assets/product-video-play.svg)](https://youtu.be/LMTcLntUWJM)
 
 [Watch the OpenVaultDB product video](https://youtu.be/LMTcLntUWJM)
 
